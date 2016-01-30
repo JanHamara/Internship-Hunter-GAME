@@ -16,7 +16,8 @@
 
     var player;
     var platforms;
-    var cursors;
+    var p1Cursor;
+    var p2Cursor;
     var stars;
     var star;
 
@@ -32,12 +33,18 @@
         stars.enableBody = true;
 
         //  Our controls.
-        cursors = game.input.keyboard.createCursorKeys();
+        p1Cursor = game.input.keyboard.createCursorKeys();
+        p2Cursor = game.input.keyboard.createCursorKeys();
 
         starTimer = game.time.create(false);
         starTimer.start();
-        starTimer.loop(300, spawnStar, this);
+        starTimer.repeat(300,10, spawnStar, this);
 
+    }
+
+    function createAutoDestructTimer(target, time){
+        // Use this to destroy the star i.e. any object after creating it
+        game.time.events.add(Phaser.Timer.SECOND * time, target.destroy, target);
     }
 
     function update() {
@@ -48,7 +55,7 @@
 
         game.physics.arcade.overlap(player, stars, collectStar, null, this);
 
-        movePlayer(player, DEFAULT_SPEED);
+        movePlayer(player,p1Cursor, DEFAULT_SPEED);
 
 
     }
@@ -107,30 +114,30 @@
         player.animations.add('down', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
     }
 
-    function movePlayer(player, speed) {
+    function movePlayer(player, cursor, speed) {
     //  Reset the players velocity (movement)
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
 
-        if (cursors.left.isDown) {
+        if (cursor.left.isDown) {
             //  Move to the left
             player.body.velocity.x = -speed;
 
             player.animations.play('left');
         }
-        else if (cursors.right.isDown) {
+        else if (cursor.right.isDown) {
             //  Move to the right
             player.body.velocity.x = speed;
 
             player.animations.play('right');
         }
-        else if (cursors.up.isDown) {
+        else if (cursor.up.isDown) {
             //  Move to the right
             player.body.velocity.y = -speed;
 
             player.animations.play('up');
         }
-        else if (cursors.down.isDown) {
+        else if (cursor.down.isDown) {
             //  Move to the right
             player.body.velocity.y = speed;
 
@@ -152,5 +159,6 @@
         var randomX = Math.floor(Math.random() * 800) + 30;
         var randomY = Math.floor(Math.random() * 680) + 30;
         star = stars.create(randomX, randomY, 'star');
+        var autoDestruct = createAutoDestructTimer(star, 3)
     }
 })();
