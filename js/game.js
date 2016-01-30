@@ -8,6 +8,7 @@
         game.load.image('ground', 'assets/platform.png');
         game.load.image('star', 'assets/star.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+        game.load.atlasJSONArray('red', 'sprites/red.png', 'sprites/red.json');
 
     }
 
@@ -91,7 +92,7 @@
 
     function initPlayer() {
 // The player and its settings
-        player = game.add.sprite(32, game.world.height - 150, 'dude');
+        player = game.add.sprite(32, game.world.height - 150, 'red');
 
         //  We need to enable physics on the player
         game.physics.arcade.enable(player);
@@ -100,10 +101,12 @@
         player.body.collideWorldBounds = true;
 
         //  Our two animations, walking left and right.
-        player.animations.add('left', [0, 1, 2, 3], 10, true);
-        player.animations.add('right', [5, 6, 7, 8], 10, true);
-        player.animations.add('up', [5, 6, 7, 8], 10, true);
-        player.animations.add('down', [5, 6, 7, 8], 10, true);
+        player.animations.add('left', [6,7,8], 10, true);
+        player.animations.add('right', [9,10,11], 10, true);
+        player.animations.add('up', [0,1,2], 10, true);
+        player.animations.add('down', [3,4,5], 10, true);
+
+        player.scale.setTo(0.2, 0.2)
     }
 
     function movePlayer(player, cursors) {
