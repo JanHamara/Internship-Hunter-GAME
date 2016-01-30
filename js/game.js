@@ -14,14 +14,19 @@
     var player;
     var platforms;
     var cursors;
-
     var stars;
+    var star;
 
     function create() {
 
         initEnvironmnent();
 
         initPlayer();
+
+        stars = game.add.group();
+        stars.enableBody = true;
+
+        star = stars.create(70, 70, 'star');
 
         //  Our controls.
         cursors = game.input.keyboard.createCursorKeys();
@@ -34,44 +39,13 @@
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(stars, platforms);
 
+        game.physics.arcade.overlap(player, stars, collectStar, null, this);
 
-        //  Reset the players velocity (movement)
-        player.body.velocity.x = 0;
-        player.body.velocity.y = 0;
-
-        if (cursors.left.isDown) {
-            //  Move to the left
-            player.body.velocity.x = -150;
-
-            player.animations.play('left');
-        }
-        else if (cursors.right.isDown) {
-            //  Move to the right
-            player.body.velocity.x = 150;
-
-            player.animations.play('right');
-        }
-        else if (cursors.up.isDown) {
-            //  Move to the right
-            player.body.velocity.y = -150;
-
-            player.animations.play('up');
-        }
-        else if (cursors.down.isDown) {
-            //  Move to the right
-            player.body.velocity.y = 150;
-
-            player.animations.play('down');
-        }
-        else {
-            //  Stand still
-            player.animations.stop();
-
-            player.frame = 4;
-        }
+        movePlayer(player, cursors);
 
 
     }
+    
 
     function initEnvironmnent() {
 //  We're going to be using physics, so enable the Arcade Physics system
@@ -124,5 +98,46 @@
         player.animations.add('right', [5, 6, 7, 8], 10, true);
         player.animations.add('up', [5, 6, 7, 8], 10, true);
         player.animations.add('down', [5, 6, 7, 8], 10, true);
+    }
+
+    function movePlayer(player, cursors) {
+//  Reset the players velocity (movement)
+        player.body.velocity.x = 0;
+        player.body.velocity.y = 0;
+
+        if (cursors.left.isDown) {
+            //  Move to the left
+            player.body.velocity.x = -150;
+
+            player.animations.play('left');
+        }
+        else if (cursors.right.isDown) {
+            //  Move to the right
+            player.body.velocity.x = 150;
+
+            player.animations.play('right');
+        }
+        else if (cursors.up.isDown) {
+            //  Move to the right
+            player.body.velocity.y = -150;
+
+            player.animations.play('up');
+        }
+        else if (cursors.down.isDown) {
+            //  Move to the right
+            player.body.velocity.y = 150;
+
+            player.animations.play('down');
+        }
+        else {
+            //  Stand still
+            player.animations.stop();
+
+            player.frame = 4;
+        }
+    }
+
+    function collectStar(){
+        star.kill();
     }
 })();
