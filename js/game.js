@@ -17,6 +17,8 @@
     var stars;
     var star;
 
+    var starTimer;
+
     function create() {
 
         initEnvironmnent();
@@ -30,6 +32,10 @@
 
         //  Our controls.
         cursors = game.input.keyboard.createCursorKeys();
+
+        starTimer = game.time.create(false);
+        starTimer.start();
+        starTimer.repeat(2000, 20, spawnStar, this);
 
     }
 
@@ -139,5 +145,9 @@
 
     function collectStar(){
         star.kill();
+    }
+
+    function  spawnStar(){
+        console.log("spawn");
     }
 })();
