@@ -2,14 +2,17 @@
 
     var game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {preload: preload, create: create, update: update});
     var itemCollection = [{
-        name: 'star',
-        image: 'assets/star.png'
+        name: 'chrome',
+        image: 'assets/icon_chrome.png'
     }, {
-        name: 'diamond',
-        image: 'assets/diamond.png'
-    },{
-        name: 'firstAid',
-        image: 'assets/firstaid.png'
+        name: 'mlh',
+        image: 'assets/icon_mlh.png'
+    }, {
+        name: 'thales',
+        image: 'assets/icon_thales.png'
+    }, {
+        name: 'uoc',
+        image: 'assets/uoc_logo.png'
     }];
 
     function preload() {
@@ -19,7 +22,7 @@
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
         game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
-        for(var i = 0; i < itemCollection.length; i++){
+        for (var i = 0; i < itemCollection.length; i++) {
             game.load.image(itemCollection[i].name, itemCollection[i].image);
         }
 
@@ -122,10 +125,10 @@
         player.body.collideWorldBounds = true;
 
         //  Our two animations, walking left and right.
-        player.animations.add('left', [6,7,8], 10, true);
-        player.animations.add('right', [9,10,11], 10, true);
-        player.animations.add('up', [0,1,2], 10, true);
-        player.animations.add('down', [3,4,5], 10, true);
+        player.animations.add('left', [6, 7, 8], 10, true);
+        player.animations.add('right', [9, 10, 11], 10, true);
+        player.animations.add('up', [0, 1, 2], 10, true);
+        player.animations.add('down', [3, 4, 5], 10, true);
 
         player.scale.setTo(0.2, 0.2)
     }
