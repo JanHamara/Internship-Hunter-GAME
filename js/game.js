@@ -1,22 +1,39 @@
 (function () {
 
     var game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {preload: preload, create: create, update: update});
+    var itemCollection = [{
+        name: 'star',
+        image: 'assets/star.png'
+    }, {
+        name: 'diamond',
+        image: 'assets/diamond.png'
+    },{
+        name: 'firstAid',
+        image: 'assets/firstaid.png'
+    }];
 
     function preload() {
 
         game.load.image('sky', 'assets/sky.png');
         game.load.image('ground', 'assets/platform.png');
-        game.load.image('star', 'assets/star.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
         game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
+        for(var i = 0; i < itemCollection.length; i++){
+            game.load.image(itemCollection[i].name, itemCollection[i].image);
+        }
+
     }
+
+    var DEFAULT_SPEED = 400;
+    var DEFAULT_SPRITE_FRAMERATE = 5;
 
     var player;
     var platforms;
-    var cursors;
-    var stars;
-    var star;
+    var p1Cursor;
+    var p2Cursor;
+    var items;
+    var item;
 
     var starTimer;
 
@@ -26,33 +43,37 @@
 
         initPlayer();
 
-        stars = game.add.group();
-        stars.enableBody = true;
-
-        star = stars.create(70, 70, 'star');
+        items = game.add.group();
+        items.enableBody = true;
 
         //  Our controls.
-        cursors = game.input.keyboard.createCursorKeys();
+        p1Cursor = game.input.keyboard.createCursorKeys();
+        p2Cursor = game.input.keyboard.createCursorKeys();
 
         starTimer = game.time.create(false);
         starTimer.start();
-        starTimer.repeat(2000, 20, spawnStar, this);
+        starTimer.repeat(300, 20, spawnObject, this);
 
+    }
+
+    function createAutoDestructTimer(target, time) {
+        // Use this to destroy the item i.e. any object after creating it
+        game.time.events.add(Phaser.Timer.SECOND * time, target.destroy, target);
     }
 
     function update() {
 
-        //  Collide the player and the stars with the platforms
+        //  Collide the player and the items with the platforms
         game.physics.arcade.collide(player, platforms);
-        game.physics.arcade.collide(stars, platforms);
+        game.physics.arcade.collide(items, platforms);
 
-        game.physics.arcade.overlap(player, stars, collectStar, null, this);
+        game.physics.arcade.overlap(player, items, collectObject, null, this);
 
-        movePlayer(player, cursors);
+        movePlayer(player, p1Cursor, DEFAULT_SPEED);
 
 
     }
-    
+
 
     function initEnvironmnent() {
 //  We're going to be using physics, so enable the Arcade Physics system
@@ -109,32 +130,32 @@
         player.scale.setTo(0.2, 0.2)
     }
 
-    function movePlayer(player, cursors) {
-//  Reset the players velocity (movement)
+    function movePlayer(player, cursor, speed) {
+        //  Reset the players velocity (movement)
         player.body.velocity.x = 0;
         player.body.velocity.y = 0;
 
-        if (cursors.left.isDown) {
+        if (cursor.left.isDown) {
             //  Move to the left
-            player.body.velocity.x = -150;
+            player.body.velocity.x = -speed;
 
             player.animations.play('left');
         }
-        else if (cursors.right.isDown) {
+        else if (cursor.right.isDown) {
             //  Move to the right
-            player.body.velocity.x = 150;
+            player.body.velocity.x = speed;
 
             player.animations.play('right');
         }
-        else if (cursors.up.isDown) {
+        else if (cursor.up.isDown) {
             //  Move to the right
-            player.body.velocity.y = -150;
+            player.body.velocity.y = -speed;
 
             player.animations.play('up');
         }
-        else if (cursors.down.isDown) {
+        else if (cursor.down.isDown) {
             //  Move to the right
-            player.body.velocity.y = 150;
+            player.body.velocity.y = speed;
 
             player.animations.play('down');
         }
@@ -146,11 +167,15 @@
         }
     }
 
-    function collectStar(){
-        star.kill();
+    function collectObject(player, object) {
+        object.kill();
     }
 
-    function  spawnStar(){
-        console.log("spawn");
+    function spawnObject() {
+        var randomX = Math.floor(Math.random() * 800) + 30;
+        var randomY = Math.floor(Math.random() * 680) + 30;
+        var randomItem = itemCollection[Math.floor(Math.random() * itemCollection.length)].name;
+        item = items.create(randomX, randomY, randomItem);
+        var autoDestruct = createAutoDestructTimer(item, 3)
     }
 })();
