@@ -28,14 +28,12 @@
         stars = game.add.group();
         stars.enableBody = true;
 
-        star = stars.create(70, 70, 'star');
-
         //  Our controls.
         cursors = game.input.keyboard.createCursorKeys();
 
         starTimer = game.time.create(false);
         starTimer.start();
-        starTimer.repeat(2000, 20, spawnStar, this);
+        starTimer.loop(300, spawnStar, this);
 
     }
 
@@ -143,11 +141,13 @@
         }
     }
 
-    function collectStar(){
+    function collectStar(player, star){
         star.kill();
     }
 
     function  spawnStar(){
-        console.log("spawn");
+        var randomX = Math.floor(Math.random() * 800) + 30;
+        var randomY = Math.floor(Math.random() * 680) + 30;
+        star = stars.create(randomX, randomY, 'star');
     }
 })();
