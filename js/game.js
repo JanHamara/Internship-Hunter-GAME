@@ -1,6 +1,6 @@
 (function () {
 
-    var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update});
+    var game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {preload: preload, create: create, update: update});
 
     function preload() {
 
@@ -64,22 +64,22 @@
         var ground = platforms.create(0, game.world.height - 30, 'ground');
 
         //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-        ground.scale.setTo(2, 2);
+        ground.scale.setTo(3, 2);
 
         //  This stops it from falling away when you jump on it
         ground.body.immovable = true;
 
         //  Now let's create two ledges
         var ledge = platforms.create(0, 0, 'ground');
-        ledge.scale.setTo(2, 1);
+        ledge.scale.setTo(3, 1);
         ledge.body.immovable = true;
 
         ledge = platforms.create(0, 0, 'ground');
-        ledge.scale.setTo(.05, 20);
+        ledge.scale.setTo(.07, 30);
         ledge.body.immovable = true;
 
-        ledge = platforms.create(game.world.width - 20, 0, 'ground');
-        ledge.scale.setTo(.05, 20);
+        ledge = platforms.create(game.world.width - 28, 0, 'ground');
+        ledge.scale.setTo(.07, 30);
         ledge.body.immovable = true;
     }
 
