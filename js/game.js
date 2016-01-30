@@ -14,7 +14,8 @@
     var DEFAULT_SPEED = 400;
     var DEFAULT_SPRITE_FRAMERATE = 5;
 
-    var player;
+    var player1;
+    var player2;
     var platforms;
     var p1Cursor;
     var p2Cursor;
@@ -34,7 +35,12 @@
 
         //  Our controls.
         p1Cursor = game.input.keyboard.createCursorKeys();
-        p2Cursor = game.input.keyboard.createCursorKeys();
+        p2Cursor = {
+                up: game.input.keyboard.addKey(Phaser.Keyboard.W),
+                down: game.input.keyboard.addKey(Phaser.Keyboard.S),
+                left: game.input.keyboard.addKey(Phaser.Keyboard.A),
+                right: game.input.keyboard.addKey(Phaser.Keyboard.D)
+        };
 
         starTimer = game.time.create(false);
         starTimer.start();
@@ -50,12 +56,15 @@
     function update() {
 
         //  Collide the player and the stars with the platforms
-        game.physics.arcade.collide(player, platforms);
+        game.physics.arcade.collide(player1, platforms);
+        game.physics.arcade.collide(player2, platforms);
         game.physics.arcade.collide(stars, platforms);
 
-        game.physics.arcade.overlap(player, stars, collectStar, null, this);
+        game.physics.arcade.overlap(player1, stars, collectStar, null, this);
+        game.physics.arcade.overlap(player2, stars, collectStar, null, this);
 
-        movePlayer(player,p1Cursor, DEFAULT_SPEED);
+        movePlayer(player1, p1Cursor, DEFAULT_SPEED);
+        movePlayer(player2, p2Cursor, DEFAULT_SPEED);
 
 
     }
@@ -99,19 +108,27 @@
 
     function initPlayer() {
 // The player and its settings
-        player = game.add.sprite(32, game.world.height - 150, 'dude');
+        player1 = game.add.sprite(32, game.world.height - 150, 'dude');
+        player2 = game.add.sprite(game.world.width-32, game.world.height - 150, 'dude');
 
         //  We need to enable physics on the player
-        game.physics.arcade.enable(player);
+        game.physics.arcade.enable(player1);
+        game.physics.arcade.enable(player2);
 
         //  Player physics properties. Give the little guy a slight bounce.
-        player.body.collideWorldBounds = true;
+        player1.body.collideWorldBounds = true;
+        player2.body.collideWorldBounds = true;
 
         //  Our two animations, walking left and right.
-        player.animations.add('left', [0, 1, 2, 3], DEFAULT_SPRITE_FRAMERATE, true);
-        player.animations.add('right', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
-        player.animations.add('up', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
-        player.animations.add('down', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
+        player1.animations.add('left', [0, 1, 2, 3], DEFAULT_SPRITE_FRAMERATE, true);
+        player1.animations.add('right', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
+        player1.animations.add('up', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
+        player1.animations.add('down', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
+
+        player2.animations.add('left', [0, 1, 2, 3], DEFAULT_SPRITE_FRAMERATE, true);
+        player2.animations.add('right', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
+        player2.animations.add('up', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
+        player2.animations.add('down', [5, 6, 7, 8], DEFAULT_SPRITE_FRAMERATE, true);
     }
 
     function movePlayer(player, cursor, speed) {
