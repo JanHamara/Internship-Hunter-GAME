@@ -8,8 +8,8 @@
         game.load.image('ground', 'assets/platform.png');
         game.load.image('star', 'assets/star.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-        game.load.atlasJSONArray('red', 'sprites/red.png', 'sprites/red.json');
-
+        game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
+        game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
     }
 
     var player;
@@ -92,7 +92,7 @@
 
     function initPlayer() {
 // The player and its settings
-        player = game.add.sprite(32, game.world.height - 150, 'red');
+        player = game.add.sprite(32, game.world.height - 150, 'player-red');
 
         //  We need to enable physics on the player
         game.physics.arcade.enable(player);
