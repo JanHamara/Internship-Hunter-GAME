@@ -1,4 +1,4 @@
-function Player (game, spriteName, x, y) {
+function Player(game, spriteName, x, y) {
     this.game = game;
 
     this.sprite = this.game.add.sprite(x, y, spriteName);
