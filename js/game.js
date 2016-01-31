@@ -105,6 +105,12 @@ var p2xp = 0;
                 shoot: 'L'
             });
 
+            var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.U);
+
+            spaceKey.onDown.addOnce(function(){
+                p1.xp.setXP(99);
+            }, this);
+
             exp1 = new Experience(game, 'xpBar1', 'blueBar', 4, 400);
             exp2 = new Experience(game, 'xpBar2', 'redBar', 937, 400);
             p1.xp = exp1;
