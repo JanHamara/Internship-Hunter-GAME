@@ -78,7 +78,7 @@
             name: 'google',
             image: 'assets/icon_google.png',
             effect: {
-                dXP: 20,
+                dXP: 1,
                 dSpeed: 0,
                 dScale: 1.0
             }
@@ -87,7 +87,7 @@
             name: 'thales',
             image: 'assets/icon_thales.png',
             effect: {
-                dXP: 15,
+                dXP: 1,
                 dSpeed: 0,
                 dScale: 1.0
             }
@@ -99,7 +99,7 @@
             name: 'gsa',
             image: 'assets/icon_gsa.png',
             effect: {
-                dXP: 10,
+                dXP: 1,
                 dSpeed: 0,
                 dScale: 1.0
             }
@@ -108,7 +108,7 @@
             name: 'cantab',
             image: 'assets/icon_cantab.png',
             effect: {
-                dXP: 10,
+                dXP: 1,
                 dSpeed: 0,
                 dScale: 1.0
             }
@@ -118,7 +118,7 @@
     var studies = {
         name: 'uoc', image: 'assets/uoc_logo.png',
         effect: {
-            dXP: 30,
+            dXP: 5,
             dSpeed: 100,
             dScale: 1.2
         }
@@ -129,7 +129,7 @@
             name: 'beer',
             image: 'assets/icon_beer.png',
             effect: {
-                dXP: -20,
+                dXP: -1,
                 dSpeed: -100,
                 dScale: 1.5
             }
@@ -148,7 +148,7 @@
     var hackathon = {
         name: 'mlh', image: 'assets/icon_mlh.png',
         effect: {
-            dXP: 20,
+            dXP: 3,
             dSpeed: 0,
             dScale: 1.0
         }
