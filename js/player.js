@@ -65,8 +65,7 @@ Player.prototype.movePlayer = function () {
         this.sprite.animations.play('shoot', this.currentSpriteFramerate, true);
     } else {
         //  Stand still
-        this.sprite.animations.stop();
-        // this.shootFunction();
+        this.sprite.animations.play('shoot', this.currentSpriteFramerate, true);
         // this.sprite.frame = 4;
     }
 };
