@@ -38,6 +38,7 @@
         game.load.image('ground', 'assets/wall.jpg');
         game.load.image('side', 'assets/wall2.jpg');
         game.load.image('obstacle', 'assets/obstacle.png');
+        game.load.image('cv', 'assets/icon_cv.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
         game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
@@ -65,7 +66,8 @@
             up: 'W',
             down: 'S',
             left: 'A',
-            right: 'D'
+            right: 'D',
+            shoot: 'TAB'
         });
 
         p2 = new Player(game, 'player-white', x = game.world.width - 130, y = game.world.height - 130);
@@ -73,15 +75,12 @@
             up: 'UP',
             down: 'DOWN',
             left: 'LEFT',
-            right: 'RIGHT'
+            right: 'RIGHT',
+            shoot: 'L'
         });
 
         items = game.add.group();
         items.enableBody = true;
-
-        //  Our controls.
-        p1Cursor = game.input.keyboard.createCursorKeys();
-        p2Cursor = game.input.keyboard.createCursorKeys();
 
         starTimer = game.time.create(false);
         starTimer.start();
