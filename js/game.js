@@ -342,7 +342,7 @@
                 var player_object;
                 for (var i = 0; i< ITEM_OBJECTS.length; i++){
                     if (objectSprite.key == ITEM_OBJECTS[i].name){
-                        item_object = ITEM_OBJECTS[i]
+                        item_object = ITEM_OBJECTS[i];
                         break;
                     }
                 };
@@ -351,6 +351,22 @@
                 }else{
                     player_object = p2
                 };
+
+                if(item_object.name == "redbull"){
+                    var redBullTimer = game.time.create(true);
+                    redBullTimer.add(3000, function (player_object) {
+                        player_object.currentSpeed = PLAYER_DEFAULT_SPEED;
+                        player_object.sprite.scale.setTo(1.0 * PLAYER_DEFAULT_SCALE, 1.0 * PLAYER_DEFAULT_SCALE)
+                    }, null, player_object);
+                    redBullTimer.start();
+                }else if(item_object.name == "beer"){
+                    var beerTimer = game.time.create(true);
+                    beerTimer.add(3000, function (player_object) {
+                        player_object.currentSpeed = PLAYER_DEFAULT_SPEED;
+                        player_object.sprite.scale.setTo(1.0 * PLAYER_DEFAULT_SCALE, 1.0 * PLAYER_DEFAULT_SCALE)
+                    }, null, player_object);
+                    beerTimer.start();
+                }
 
                 player_object.xp.addXP(item_object.effect.dXP);
 
