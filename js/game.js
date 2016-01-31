@@ -8,6 +8,8 @@
     var items;
     var item;
 
+    var specialViewCollectCount = 0;
+
     var starTimer;
     var obstacle, waterObstacle;
 
@@ -62,8 +64,8 @@
 
             // load different items that can be picked up
             var itemCollection = topCompanies.concat(regularCompanies.concat(recreation.concat(recreation)));
-            itemCollection.push(hackathon);
-            itemCollection.push(studies);
+                itemCollection.push(hackathon);
+                itemCollection.push(studies);
             for (var i = 0; i < itemCollection.length; i++) {
                 var item = new Item(itemCollection[i].name, 0, itemCollection[i].image);
                 item.effect = itemCollection[i].effect;
@@ -243,6 +245,10 @@
                 }
 
                 var gameWon = player_object.xp.addXP(item_object.effect.dXP);
+
+                if (item_object.name == 'mlh')
+                    game.state.start('special');
+
                 if(item_object.name == "redbull"){
                     var redBullTimer = game.time.create(true);
                     redBullTimer.add(3000, function (player_object) {
@@ -292,13 +298,129 @@
 
     var specialState = {
         preload: function () {
-            game.load.image('start', 'assets/end_screen.png');
+            game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
+            game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
+            game.load.image('diamond', 'assets/diamond.png');
+            // game.load.atlasJSONArray('wifi, 'sprites/wifi.png', 'sprites/wifi.json');
         },
         create: function () {
-            game.add.sprite(0, 0, 'start');
-        },
-        start: function () {
 
+            initEnvironmnent();
+
+            p1 = new Player(game, 'player-red', x = 50, y = 50);
+            p1.setControls({
+                up: 'W',
+                down: 'S',
+                left: 'A',
+                right: 'D',
+                shoot: 'TAB'
+            });
+
+            p2 = new Player(game, 'player-white', x = game.world.width - 130, y = 50);
+            p2.setControls({
+                up: 'UP',
+                down: 'DOWN',
+                left: 'LEFT',
+                right: 'RIGHT',
+                shoot: 'L'
+            });
+
+            p1.xp = exp1;
+            p2.xp = exp2;
+
+            items = game.add.group();
+            items.enableBody = true;
+
+            starTimer = game.time.create(false);
+            starTimer.start();
+            starTimer.loop(ITEM_SPAWN_DELAY, spawnObject, this);
+
+
+            function createAutoDestructTimer(target, time) {
+                // Use this to destroy the item i.e. any object after creating it
+                game.time.events.add(Phaser.Timer.SECOND * time, target.destroy, target);
+            }
+
+
+            function initObstacles() {
+
+            }
+
+            function initEnvironmnent() {
+                //  We're going to be using physics, so enable the Arcade Physics system
+                game.physics.startSystem(Phaser.Physics.ARCADE);
+
+                //  A simple background for our game
+                //game.add.sprite(0, 0, 'sky');
+
+
+                //  The platforms group contains the ground and the 2 ledges we can jump on
+                platforms = game.add.group();
+
+                //  We will enable physics for any object that is created in this group
+                platforms.enableBody = true;
+
+                // Here we create the ground.
+                var ground = platforms.create(0, game.world.height - 30, 'ground');
+                ground.body.immovable = true;
+
+                var ledge = platforms.create(0, 0, 'ground');
+                ledge.body.immovable = true;
+
+                ledge = platforms.create(0, 0, 'side');
+                ledge.body.immovable = true;
+
+                ledge = platforms.create(game.world.width - 30, 0, 'side');
+                ledge.body.immovable = true;
+                initObstacles();
+
+
+            }
+
+
+            function spawnObject() {
+                var randomX = Math.floor(Math.random() * 800) + 30;
+                var randomY = Math.floor(Math.random() * 680) + 30;
+                var randomOdd = Math.floor(Math.random() * 100);
+                var item;
+
+                item = items.create(randomX, randomY, 'diamond');
+                createAutoDestructTimer(item, 2)
+            }
+
+            var specialKey = game.input.keyboard.addKey(Phaser.Keyboard.B);
+            specialKey.onDown.addOnce(this.start, this);
+        },
+        update: function () {
+            //  Collide the player and the items with the platforms
+            game.physics.arcade.collide(p1.sprite, platforms);
+            game.physics.arcade.overlap(p1.sprite, items, collectObject, null, this);
+
+            game.physics.arcade.collide(p1.sprite, p2.sprite);
+
+            game.physics.arcade.collide(p2.sprite, platforms);
+            game.physics.arcade.overlap(p2.sprite, items, collectObject, null, this);
+
+            game.physics.arcade.collide(items, platforms);
+            game.physics.arcade.overlap(platforms, items, collectObject, null, this);
+
+            p1.movePlayer();
+            p2.movePlayer();
+
+            function collectObject(playerSprite, objectSprite) {
+                objectSprite.kill();
+                specialViewCollectCount++;
+                if (specialViewCollectCount >= WIFI_VIEW_COLLECTED) {
+                    specialViewCollectCount = 0;
+                    game.state.start('game');
+                }
+            }
+
+        },
+
+        start: function() {
+            game.state.start('special');
+            console.log('special');
         }
     };
 
