@@ -2,8 +2,8 @@
 
     var game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {preload: preload, create: create, update: update});
     var itemCollection = [{
-        name: 'chrome',
-        image: 'assets/icon_chrome.png'
+        name: 'google',
+        image: 'assets/icon_google.png'
     }, {
         name: 'mlh',
         image: 'assets/icon_mlh.png'
