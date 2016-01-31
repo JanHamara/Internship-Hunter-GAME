@@ -7,8 +7,8 @@
 
 
     var itemCollection = [{
-        name: 'chrome',
-        image: 'assets/icon_chrome.png'
+        name: 'google',
+        image: 'assets/icon_google.png'
     }, {
         name: 'mlh',
         image: 'assets/icon_mlh.png'
@@ -18,12 +18,26 @@
     }, {
         name: 'uoc',
         image: 'assets/uoc_logo.png'
+    }, {
+        name: 'redbull',
+        image: 'assets/icon_redbull.png'
+    }, {
+        name: 'beer',
+        image: 'assets/icon_beer.png'
+    }, {
+        name: 'gsa',
+        image: 'assets/icon_gsa.png'
+    }, {
+        name: 'cantab',
+        image: 'assets/icon_cantab.png'
     }];
 
     function preload() {
 
-        game.load.image('sky', 'assets/sky.png');
-        game.load.image('ground', 'assets/platform.png');
+        game.load.image('sky', 'assets/map.png');
+        game.load.image('ground', 'assets/wall.jpg');
+        game.load.image('side', 'assets/wall2.jpg');
+        game.load.image('obstacle', 'assets/obstacle.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
         game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
@@ -110,25 +124,25 @@
 
         // Here we create the ground.
         var ground = platforms.create(0, game.world.height - 30, 'ground');
-
-        //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-        ground.scale.setTo(3, 2);
-
-        //  This stops it from falling away when you jump on it
         ground.body.immovable = true;
 
-        //  Now let's create two ledges
         var ledge = platforms.create(0, 0, 'ground');
-        ledge.scale.setTo(3, 1);
         ledge.body.immovable = true;
 
-        ledge = platforms.create(0, 0, 'ground');
-        ledge.scale.setTo(.07, 30);
+        ledge = platforms.create(0, 0, 'side');
         ledge.body.immovable = true;
 
-        ledge = platforms.create(game.world.width - 28, 0, 'ground');
-        ledge.scale.setTo(.07, 30);
+        ledge = platforms.create(game.world.width - 30, 0, 'side');
         ledge.body.immovable = true;
+
+        //obstacles
+        var obstacle = platforms.create(430, 355, 'obstacle');
+        obstacle.scale.setTo(0.365, 0.8);
+        obstacle.body.immovable = true;
+
+        obstacle = platforms.create(585, 310, 'obstacle');
+        obstacle.scale.setTo(0.06, 2);
+        obstacle.body.immovable = true;
     }
 
 
