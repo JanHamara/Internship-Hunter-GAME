@@ -13,16 +13,15 @@
     var starTimer;
     var obstacle, waterObstacle;
     var musicPlaying = false;
-
+    var ea,sound;
 
     var menuState = {
         preload: function () {
             game.load.image('start', 'assets/first_screen.png');
-            game.load.audio('ea', 'assets/ea-sport.mp3');
+            ea = new Audio('assets/ea-sport.mp3');
         },
         create: function () {
             game.add.sprite(0, 0, 'start');
-            var ea = game.add.audio('ea');
             ea.play();
 
             var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -64,7 +63,7 @@
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
 
-            game.load.audio('sound', 'assets/80s-electric.mp3');
+            sound = new Audio('assets/80s-electric.mp3');
 
             // load different items that can be picked up
             var itemCollection = topCompanies.concat(regularCompanies.concat(recreation.concat(recreation)));
@@ -78,10 +77,8 @@
             }
         },
         create: function () {
-
-            var audio = game.add.audio('sound');
             if (!musicPlaying) {
-                audio.play();
+                sound.play();
                 musicPlaying = true;
             }
             
