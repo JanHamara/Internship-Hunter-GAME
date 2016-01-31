@@ -304,7 +304,7 @@
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
             game.load.image('diamond', 'assets/diamond.png');
-            // game.load.atlasJSONArray('wifi, 'sprites/wifi.png', 'sprites/wifi.json');
+            game.load.atlasJSONArray('wifi', 'sprites/wifi.png', 'sprites/wifi.json');
         },
         create: function () {
 
@@ -387,7 +387,10 @@
                 var randomOdd = Math.floor(Math.random() * 100);
                 var item;
 
-                item = items.create(randomX, randomY, 'diamond');
+                item = items.create(randomX, randomY, 'wifi');
+                item.animations.add('wifi', [0, 1, 2, 3], 3, true);
+                item.animations.play('wifi', 3, true);
+                item.scale.setTo(0.6, 0.6);
                 createAutoDestructTimer(item, 2)
             }
 
