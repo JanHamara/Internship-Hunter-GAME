@@ -22,13 +22,18 @@ Experience.prototype.setXP = function (xp) {
 Experience.prototype.drawXP = function () {
     this.bar.scale.setTo(0.7, this.xp / 100);
     this.bar.y = 675 - (this.xp * 2.7);
+    console.log(this.xp);
 };
 
 Experience.prototype.addXP = function (xp) {
-    if (this.xp + xp < 100)
+    var gameWon = false;
+    if (this.xp + xp < 10) {
         this.xp += xp;
-    else
-        this.xp = 100;
-
+    }
+    else {
+        this.xp = 10;
+        gameWon = true;
+    }
     this.drawXP();
+    return gameWon;
 };

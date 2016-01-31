@@ -27,51 +27,6 @@
         image: 'assets/icon_cantab.png'
     }];
 
-    var p1, p2;
-    var exp1, exp2;
-
-    var platforms;
-    var items;
-    var item;
-
-    var starTimer;
-    var obstacle, waterObstacle;
-
-
-    var menuState = {
-        preload:  function(){
-            game.load.image('start', 'assets/first_screen.png');
-        },
-        create: function () {
-            game.load.image('start', 'assets/map.png');
-            game.add.sprite(0, 0, 'start');
-
-            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-            wkey.onDown.addOnce(this.start, this);
-        },
-        start: function () {
-            game.state.start('info');
-        }
-    };
-
-    var infoState = {
-        preload:  function(){
-            game.load.image('start', 'assets/help_screen.png');
-        },
-        create: function () {
-            game.load.image('start', 'assets/map.png');
-            game.add.sprite(0, 0, 'start');
-
-            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-            wkey.onDown.addOnce(this.start, this);
-
-        },
-        start: function () {
-            game.state.start('game');
-        }
-    };
-
     //10%
     var topCompanies = [
         {
@@ -151,6 +106,49 @@
             dXP: 3,
             dSpeed: 0,
             dScale: 1.0
+        }
+    };
+
+    var p1, p2;
+    var exp1, exp2;
+
+    var platforms;
+    var items;
+    var item;
+
+    var starTimer;
+    var obstacle, waterObstacle;
+
+
+    var menuState = {
+        preload: function () {
+            game.load.image('start', 'assets/first_screen.png');
+        },
+        create: function () {
+            game.add.sprite(0, 0, 'start');
+
+            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            wkey.onDown.addOnce(this.start, this);
+        },
+        start: function () {
+            game.state.start('info');
+        }
+    };
+
+    var infoState = {
+        preload: function () {
+            game.load.image('start', 'assets/help_screen.png');
+        },
+        create: function () {
+            game.add.sprite(0, 0, 'start');
+
+            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+            wkey.onDown.addOnce(this.start, this);
+
+        },
+        start: function () {
+            game.state.start('game');
         }
     };
 
@@ -340,30 +338,63 @@
             function collectObject(playerSprite, objectSprite) {
                 var item_object;
                 var player_object;
-                for (var i = 0; i< ITEM_OBJECTS.length; i++){
-                    if (objectSprite.key == ITEM_OBJECTS[i].name){
+                for (var i = 0; i < ITEM_OBJECTS.length; i++) {
+                    if (objectSprite.key == ITEM_OBJECTS[i].name) {
                         item_object = ITEM_OBJECTS[i]
                         break;
                     }
-                };
-                if (playerSprite.key == p1.sprite.key){
-                    player_object = p1
-                }else{
-                    player_object = p2
-                };
+                }
 
-                player_object.xp.addXP(item_object.effect.dXP);
+                if (playerSprite.key == p1.sprite.key) {
+                    player_object = p1
+                } else {
+                    player_object = p2
+                }
+
+                var gameWon = player_object.xp.addXP(item_object.effect.dXP);
+
+                if (gameWon)
+                    game.state.start('won');
+
 
                 player_object.currentSpeed += item_object.effect.dSpeed;
                 player_object.sprite.scale.setTo(item_object.effect.dScale * PLAYER_DEFAULT_SCALE, item_object.effect.dScale * PLAYER_DEFAULT_SCALE)
                 objectSprite.kill();
             }
+
+        }
+    };
+
+    var wonState = {
+        preload: function () {
+            game.load.image('start', 'assets/end_screen.png');
+        },
+        create: function () {
+            game.add.sprite(0, 0, 'start');
+        },
+        start: function () {
+
+        }
+    };
+
+    var specialState = {
+        preload: function () {
+            game.load.image('start', 'assets/end_screen.png');
+        },
+        create: function () {
+            game.load.image('start', 'assets/map.png');
+            game.add.sprite(0, 0, 'start');
+        },
+        start: function () {
+
         }
     };
 
     game.state.add('menu', menuState);
     game.state.add('game', gameState);
     game.state.add('info', infoState);
+    game.state.add('won', wonState);
+    game.state.add('special', specialState);
     game.state.start('menu');
 
 })();
