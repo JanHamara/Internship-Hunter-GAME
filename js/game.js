@@ -17,9 +17,12 @@
     var menuState = {
         preload: function () {
             game.load.image('start', 'assets/first_screen.png');
+            game.load.audio('ea', 'assets/ea-sport.mp3');
         },
         create: function () {
             game.add.sprite(0, 0, 'start');
+            var ea = game.add.audio('ea');
+            ea.play();
 
             var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
             spaceKey.onDown.addOnce(this.start, this);
