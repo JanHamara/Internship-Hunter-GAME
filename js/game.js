@@ -1,3 +1,6 @@
+var p1xp = 0;
+var p2xp = 0;
+
 (function () {
     var game = new Phaser.Game(1024, 768, Phaser.AUTO, '');
 
@@ -106,6 +109,9 @@
             exp2 = new Experience(game, 'xpBar2', 'redBar', 937, 400);
             p1.xp = exp1;
             p2.xp = exp2;
+
+            p1.xp.setXP(p1xp);
+            p2.xp.setXP(p2xp);
 
 
             items = game.add.group();
@@ -253,9 +259,6 @@
 
                 var gameWon = player_object.xp.addXP(item_object.effect.dXP);
 
-                if (item_object.name == 'mlh')
-                    game.state.start('special');
-
                 if (item_object.name == "redbull") {
                     var redBullTimer = game.time.create(true);
                     redBullTimer.add(3000, function (player_object) {
@@ -281,6 +284,13 @@
                 player_object.currentSpeed += item_object.effect.dSpeed;
                 player_object.sprite.scale.setTo(item_object.effect.dScale * PLAYER_DEFAULT_SCALE, item_object.effect.dScale * PLAYER_DEFAULT_SCALE)
                 objectSprite.kill();
+
+                if (item_object.name == 'mlh') {
+                    p1xp = p1.xp.getXP();
+                    p2xp = p2.xp.getXP();
+
+                    game.state.start('special');
+                }
             }
 
         },
@@ -297,6 +307,8 @@
         },
         create: function () {
             game.add.sprite(0, 0, 'start');
+            p1xp = 0;
+            p2xp = 0;
         },
         start: function () {
 
@@ -308,6 +320,7 @@
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
             game.load.atlasJSONArray('wifi', 'sprites/wifi.png', 'sprites/wifi.json');
+            game.load.image('start', 'assets/.jpg');
         },
         create: function () {
 
