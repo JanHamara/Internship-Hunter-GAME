@@ -1,6 +1,5 @@
 function Player (game, spriteName, x, y) {
     this.game = game;
-    console.log("Game = %o", game);
 
     this.sprite = this.game.add.sprite(x, y, spriteName);
 
@@ -17,7 +16,7 @@ function Player (game, spriteName, x, y) {
     this.sprite.animations.add('down', [3, 4, 5], 10, true);
 
     this.sprite.scale.setTo(PLAYER_DEFAULT_SCALE, PLAYER_DEFAULT_SCALE);
-};
+}
 
 Player.prototype.game = null;
 Player.prototype.sprite = null;

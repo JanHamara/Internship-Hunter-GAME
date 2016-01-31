@@ -5,32 +5,87 @@
         update: update
     });
 
-
-    var itemCollection = [{
-        name: 'google',
-        image: 'assets/icon_google.png'
-    }, {
-        name: 'mlh',
-        image: 'assets/icon_mlh.png'
-    }, {
-        name: 'thales',
-        image: 'assets/icon_thales.png'
-    }, {
-        name: 'uoc',
-        image: 'assets/uoc_logo.png'
-    }, {
-        name: 'redbull',
-        image: 'assets/icon_redbull.png'
-    }, {
-        name: 'beer',
-        image: 'assets/icon_beer.png'
-    }, {
-        name: 'gsa',
-        image: 'assets/icon_gsa.png'
-    }, {
-        name: 'cantab',
-        image: 'assets/icon_cantab.png'
-    }];
+    //10%
+    var topCompanies = [
+        {
+            name: 'google',
+            image: 'assets/icon_google.png',
+            effect: {
+                dXP: 20,
+                dSpeed: 0,
+                dScale: 1.0
+            }
+        },
+        {
+            name: 'thales',
+            image: 'assets/icon_thales.png',
+            effect: {
+                dXP: 15,
+                dSpeed: 0,
+                dScale: 1.0
+            }
+        }
+    ];
+    //25%
+    var regularCompanies = [
+        {
+            name: 'gsa',
+            image: 'assets/icon_gsa.png',
+            effect: {
+                dXP: 10,
+                dSpeed: 0,
+                dScale: 1.0
+            }
+        },
+        {
+            name: 'cantab',
+            image: 'assets/icon_cantab.png',
+            effect: {
+                dXP: 10,
+                dSpeed: 0,
+                dScale: 1.0
+            }
+        }
+    ];
+    //15%
+    var studies = {
+        name: 'uoc', image: 'assets/uoc_logo.png',
+        effect: {
+            dXP: 30,
+            dSpeed: 100,
+            dScale: 1.2
+        }
+    };
+    //20%
+    var recreation = [
+        {
+            name: 'beer',
+            image: 'assets/icon_beer.png',
+            effect: {
+                dXP: -20,
+                dSpeed: -100,
+                dScale: 1.5
+            }
+        },
+        {
+            name: 'redbull',
+            image: 'assets/icon_redbull.png',
+            effect: {
+                dXP: 0,
+                dSpeed: 500,
+                dScale: 0.8
+            }
+        }
+    ];
+    //30%
+    var hackathon = {
+        name: 'mlh', image: 'assets/icon_mlh.png',
+        effect: {
+            dXP: 20,
+            dSpeed: 0,
+            dScale: 1.0
+        }
+    };
 
     function preload() {
 
@@ -43,8 +98,14 @@
         game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
 
         // load different items that can be picked up
+        var itemCollection = topCompanies.concat(regularCompanies.concat(recreation.concat(recreation)));
+        itemCollection.push(hackathon);
+        itemCollection.push(studies);
         for (var i = 0; i < itemCollection.length; i++) {
-            game.load.image(itemCollection[i].name, itemCollection[i].image);
+            var item = new Item(itemCollection[i].name, 0, itemCollection[i].image);
+            item.effect = itemCollection[i].effect;
+            game.load.image(item.name, item.image);
+            ITEM_OBJECTS.push(item)
         }
     }
 
@@ -80,8 +141,6 @@
         items.enableBody = true;
 
         //  Our controls.
-        p1Cursor = game.input.keyboard.createCursorKeys();
-        p2Cursor = game.input.keyboard.createCursorKeys();
 
         starTimer = game.time.create(false);
         starTimer.start();
@@ -146,16 +205,48 @@
     }
 
 
-    function collectObject(player, object) {
-        object.kill();
+    function collectObject(playerSprite, objectSprite) {
+        var item_object;
+        var player_object;
+        for (var i = 0; i< ITEM_OBJECTS.length; i++){
+            if (objectSprite.key == ITEM_OBJECTS[i].name){
+                item_object = ITEM_OBJECTS[i]
+                break;
+            }
+        };
+        if (playerSprite.key == p1.sprite.key){
+            player_object = p1
+        }else{
+            player_object = p2
+        };
+
+        player_object.xp += item_object.effect.dxp;
+        player_object.currentSpeed += item_object.effect.dSpeed;
+        player_object.sprite.scale.setTo(item_object.effect.dScale * PLAYER_DEFAULT_SCALE, item_object.effect.dScale * PLAYER_DEFAULT_SCALE)
+        objectSprite.kill();
     }
 
     function spawnObject() {
         var randomX = Math.floor(Math.random() * 800) + 30;
         var randomY = Math.floor(Math.random() * 680) + 30;
-        var randomItem = itemCollection[Math.floor(Math.random() * itemCollection.length)].name;
-        item = items.create(randomX, randomY, randomItem);
+        var randomOdd = Math.floor(Math.random() * 100);
+        var item;
+
+        if (randomOdd < 15) {
+            var randomTop = topCompanies[Math.floor(Math.random() * topCompanies.length)].name;
+            item = items.create(randomX, randomY, randomTop);
+        } else if (15 <= randomOdd && randomOdd < 40) {
+            var randomReg = regularCompanies[Math.floor(Math.random() * regularCompanies.length)].name;
+            item = items.create(randomX, randomY, randomReg);
+        } else if (40 <= randomOdd && randomOdd < 65) {
+            var randomRec = recreation[Math.floor(Math.random() * recreation.length)].name
+            item = items.create(randomX, randomY, randomRec)
+        } else if (65 <= randomOdd && randomOdd < 85) {
+            item = items.create(randomX, randomY, hackathon.name)
+
+        } else if (85 <= randomOdd && randomOdd < 100) {
+            item = items.create(randomX, randomY, studies.name)
+        }
         var autoDestruct = createAutoDestructTimer(item, 3)
     }
-
 })();
