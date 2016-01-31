@@ -205,6 +205,8 @@
 
             exp1 = new Experience(game, 'xpBar1', 'blueBar', 4, 400);
             exp2 = new Experience(game, 'xpBar2', 'redBar', 937, 400);
+            p1.xp = exp1;
+            p2.xp = exp2;
 
 
             items = game.add.group();
@@ -350,7 +352,8 @@
                     player_object = p2
                 };
 
-                player_object.xp += item_object.effect.dxp;
+                player_object.xp.addXP(item_object.effect.dXP);
+
                 player_object.currentSpeed += item_object.effect.dSpeed;
                 player_object.sprite.scale.setTo(item_object.effect.dScale * PLAYER_DEFAULT_SCALE, item_object.effect.dScale * PLAYER_DEFAULT_SCALE)
                 objectSprite.kill();

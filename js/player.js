@@ -22,7 +22,7 @@ function Player(game, spriteName, x, y) {
 Player.prototype.game = null;
 Player.prototype.sprite = null;
 Player.prototype.cursor = null;
-Player.prototype.xp = 0;
+Player.prototype.xp = null;
 Player.prototype.currentSpeed = PLAYER_DEFAULT_SPEED;
 Player.prototype.currentSpriteFramerate = PLAYER_DEFAULT_SPRITE_FRAMERATE;
 Player.prototype.currentScale = PLAYER_DEFAULT_SCALE * 1.0;
