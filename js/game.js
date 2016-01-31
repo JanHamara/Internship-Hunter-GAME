@@ -280,7 +280,7 @@
 
     var wonState = {
         preload: function () {
-            game.load.image('start', 'assets/end_screen.png');
+            game.load.image('start', 'assets/final_page.jpg');
         },
         create: function () {
             game.add.sprite(0, 0, 'start');
