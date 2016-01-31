@@ -61,7 +61,6 @@
             game.load.image('obstacle', 'assets/obstacle.png');
             game.load.image('xpBar1', 'assets/xpBarP1.png');
             game.load.image('xpBar2', 'assets/xpBarP2.png');
-            game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
 
