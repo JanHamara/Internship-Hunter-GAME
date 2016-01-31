@@ -27,11 +27,11 @@ Experience.prototype.drawXP = function () {
 
 Experience.prototype.addXP = function (xp) {
     var gameWon = false;
-    if (this.xp + xp < 10) {
+    if (this.xp + xp < 100) {
         this.xp += xp;
     }
     else {
-        this.xp = 10;
+        this.xp = 100;
         gameWon = true;
     }
     this.drawXP();
