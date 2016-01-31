@@ -120,6 +120,10 @@
         obstacle.scale.setTo(0.06, 2);
         obstacle.body.immovable = true;
 
+        obstacle = platforms.create(335, 0, 'obstacle');
+        obstacle.scale.setTo(0.52, 2);
+        obstacle.body.immovable = true;
+
         //water
         waterObstacle = platforms.create(730, 575, 'obstacle');
         waterObstacle.scale.setTo(0.4, 1.7);
@@ -173,7 +177,7 @@
 
     function spawnObject() {
         var randomX = Math.floor(Math.random() * 800) + 30;
-        var randomY = Math.floor(Math.random() * 680) + 30;
+        var randomY = Math.floor(Math.random() * 650) + 30;
         var randomItem = itemCollection[Math.floor(Math.random() * itemCollection.length)].name;
         item = items.create(randomX, randomY, randomItem);
         var autoDestruct = createAutoDestructTimer(item, 3)
