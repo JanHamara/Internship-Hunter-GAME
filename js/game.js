@@ -47,8 +47,24 @@
             game.add.sprite(0, 0, 'start');
 
             var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        p1 = new Player(game, 'player-red', x = 50, y = 50);
+        p1.setControls({
+            up: 'W',
+            down: 'S',
+            left: 'A',
+            right: 'D',
+            shoot: 'TAB'
+        });
 
             wkey.onDown.addOnce(this.start, this);
+        p2 = new Player(game, 'player-white', x = game.world.width - 130, y = 50);
+        p2.setControls({
+            up: 'UP',
+            down: 'DOWN',
+            left: 'LEFT',
+            right: 'RIGHT',
+            shoot: 'L'
+        });
 
         },
         start: function () {
@@ -87,6 +103,7 @@
             game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
+       
 
             // load different items that can be picked up
             for (var i = 0; i < itemCollection.length; i++) {
