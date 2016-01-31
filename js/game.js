@@ -39,9 +39,9 @@
         create: function () {
             game.add.sprite(0, 0, 'start');
 
-            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-            wkey.onDown.addOnce(this.start, this);
+            spaceKey.onDown.addOnce(this.start, this);
 
         },
         start: function () {
@@ -297,9 +297,12 @@
         },
         create: function () {
             game.add.sprite(0, 0, 'start');
+            var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+            spaceKey.onDown.addOnce(this.start, this);
         },
         start: function () {
-
+            game.state.start('menu');
         }
     };
 
