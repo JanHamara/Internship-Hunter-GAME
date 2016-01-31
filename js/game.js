@@ -394,8 +394,8 @@
                 var item;
 
                 item = items.create(randomX, randomY, 'wifi');
-                item.animations.add('wifi', [0, 1, 2, 3], 3, true);
-                item.animations.play('wifi', 3, true);
+                item.animations.add('wifi', [0, 1, 2, 3], 2, true);
+                item.animations.play('wifi', 2, true);
                 item.scale.setTo(0.6, 0.6);
                 createAutoDestructTimer(item, 2)
             }
@@ -439,7 +439,7 @@
 
     var characterState = {
         preload: function () {
-            game.load.image('start', 'assets/first_screen.png');
+            game.load.image('start', 'assets/intro_screen.png');
         },
         create: function () {
             game.add.sprite(0, 0, 'start');
