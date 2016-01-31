@@ -1,3 +1,6 @@
+var p1xp = 0;
+var p2xp = 0;
+
 (function () {
     var game = new Phaser.Game(1024, 768, Phaser.AUTO, '');
 
@@ -39,9 +42,9 @@
         create: function () {
             game.add.sprite(0, 0, 'start');
 
-            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-            wkey.onDown.addOnce(this.start, this);
+            spaceKey.onDown.addOnce(this.start, this);
 
         },
         start: function () {
@@ -106,6 +109,9 @@
             exp2 = new Experience(game, 'xpBar2', 'redBar', 937, 400);
             p1.xp = exp1;
             p2.xp = exp2;
+
+            p1.xp.setXP(p1xp);
+            p2.xp.setXP(p2xp);
 
 
             items = game.add.group();
@@ -253,9 +259,6 @@
 
                 var gameWon = player_object.xp.addXP(item_object.effect.dXP);
 
-                if (item_object.name == 'mlh')
-                    game.state.start('special');
-
                 if (item_object.name == "redbull") {
                     var redBullTimer = game.time.create(true);
                     redBullTimer.add(3000, function (player_object) {
@@ -281,6 +284,13 @@
                 player_object.currentSpeed += item_object.effect.dSpeed;
                 player_object.sprite.scale.setTo(item_object.effect.dScale * PLAYER_DEFAULT_SCALE, item_object.effect.dScale * PLAYER_DEFAULT_SCALE)
                 objectSprite.kill();
+
+                if (item_object.name == 'mlh') {
+                    p1xp = p1.xp.getXP();
+                    p2xp = p2.xp.getXP();
+
+                    game.state.start('special');
+                }
             }
 
         },
@@ -297,9 +307,14 @@
         },
         create: function () {
             game.add.sprite(0, 0, 'start');
+            p1xp = 0;
+            p2xp = 0;
+            var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+            spaceKey.onDown.addOnce(this.start, this);
         },
         start: function () {
-
+            game.state.start('menu');
         }
     };
 
@@ -308,6 +323,7 @@
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
             game.load.atlasJSONArray('wifi', 'sprites/wifi.png', 'sprites/wifi.json');
+            game.load.image('map_wifi', 'assets/map_wifi.png');
         },
         create: function () {
 
@@ -357,7 +373,7 @@
                 game.physics.startSystem(Phaser.Physics.ARCADE);
 
                 //  A simple background for our game
-                //game.add.sprite(0, 0, 'sky');
+                game.add.sprite(0, 0, 'map_wifi');
 
 
                 //  The platforms group contains the ground and the 2 ledges we can jump on
