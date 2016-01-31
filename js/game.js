@@ -127,8 +127,8 @@
         create: function () {
             game.add.sprite(0, 0, 'start');
 
-            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-            wkey.onDown.addOnce(this.start, this);
+            var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            spaceKey.onDown.addOnce(this.start, this);
         },
         start: function () {
             game.state.start('info');
@@ -224,10 +224,6 @@
                 game.time.events.add(Phaser.Timer.SECOND * time, target.destroy, target);
             }
 
-            function update() {
-
-            }
-
 
             function initObstacles() {
 //obstacles
@@ -259,7 +255,6 @@
                 waterObstacle = platforms.create(570, 600, 'obstacle');
                 waterObstacle.scale.setTo(0.05, 1);
                 waterObstacle.body.immovable = true;
-
 
             }
 
@@ -318,6 +313,9 @@
                 }
                 var autoDestruct = createAutoDestructTimer(item, 3)
             }
+
+            var specialKey = game.input.keyboard.addKey(Phaser.Keyboard.B);
+            specialKey.onDown.addOnce(this.start, this);
         },
         update: function () {
             //  Collide the player and the items with the platforms
@@ -362,6 +360,11 @@
                 objectSprite.kill();
             }
 
+        },
+
+        start: function() {
+            game.state.start('special');
+            console.log('special');
         }
     };
 
@@ -382,8 +385,9 @@
             game.load.image('start', 'assets/end_screen.png');
         },
         create: function () {
-            game.load.image('start', 'assets/map.png');
             game.add.sprite(0, 0, 'start');
+
+
         },
         start: function () {
 
