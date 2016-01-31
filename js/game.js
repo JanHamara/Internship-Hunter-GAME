@@ -105,6 +105,9 @@
         game.physics.arcade.collide(p2.sprite, platforms);
         game.physics.arcade.overlap(p2.sprite, items, collectObject, null, this);
 
+        game.physics.arcade.collide(items, platforms);
+        game.physics.arcade.overlap(platforms, items, collectObject, null, this);
+
         p1.movePlayer();
         p2.movePlayer();
     }
@@ -121,7 +124,7 @@
         obstacle.body.immovable = true;
 
         obstacle = platforms.create(335, 0, 'obstacle');
-        obstacle.scale.setTo(0.52, 2);
+        obstacle.scale.setTo(0.52, 2.2);
         obstacle.body.immovable = true;
 
         //water
@@ -140,6 +143,8 @@
         waterObstacle = platforms.create(570, 600, 'obstacle');
         waterObstacle.scale.setTo(0.05, 1);
         waterObstacle.body.immovable = true;
+
+
     }
 
     function initEnvironmnent() {
@@ -180,7 +185,7 @@
         var randomY = Math.floor(Math.random() * 650) + 30;
         var randomItem = itemCollection[Math.floor(Math.random() * itemCollection.length)].name;
         item = items.create(randomX, randomY, randomItem);
-        var autoDestruct = createAutoDestructTimer(item, 3)
+        var autoDestruct = createAutoDestructTimer(item, 100)
     }
 
 })();
