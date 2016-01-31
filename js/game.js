@@ -37,7 +37,7 @@ var p2xp = 0;
 
     var infoState = {
         preload: function () {
-            game.load.image('start', 'assets/help_screen.png');
+            game.load.image('start', 'assets/help_screen.jpg');
         },
         create: function () {
             game.add.sprite(0, 0, 'start');
