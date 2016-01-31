@@ -21,6 +21,9 @@
         image: 'assets/icon_beer.png'
     }];
 
+    var audio = new Audio('assets/song.mp3');
+    audio.play();
+
     function preload() {
 
         game.load.image('sky', 'assets/map.png');
