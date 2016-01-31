@@ -37,7 +37,11 @@
         game.load.image('sky', 'assets/map.png');
         game.load.image('ground', 'assets/wall.jpg');
         game.load.image('side', 'assets/wall2.jpg');
+        game.load.image('blueBar', 'assets/platform.png');
+        game.load.image('redBar', 'assets/platform2.png');
         game.load.image('obstacle', 'assets/obstacle.png');
+        game.load.image('xpBar1', 'assets/xpBarP1.png');
+        game.load.image('xpBar2', 'assets/xpBarP2.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
         game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
@@ -49,6 +53,7 @@
     }
 
     var p1, p2;
+    var exp1, exp2;
 
     var platforms;
     var items;
@@ -76,6 +81,11 @@
             left: 'LEFT',
             right: 'RIGHT'
         });
+
+        exp1 =  new Experience(game, 'xpBar1','blueBar', 4, 400);
+        exp2 = new Experience(game, 'xpBar2','redBar', 937, 400);
+
+
 
         items = game.add.group();
         items.enableBody = true;
@@ -105,6 +115,9 @@
         game.physics.arcade.collide(p2.sprite, platforms);
         game.physics.arcade.overlap(p2.sprite, items, collectObject, null, this);
 
+        game.physics.arcade.collide(items, platforms);
+        game.physics.arcade.overlap(platforms, items, collectObject, null, this);
+
         p1.movePlayer();
         p2.movePlayer();
     }
@@ -121,7 +134,7 @@
         obstacle.body.immovable = true;
 
         obstacle = platforms.create(335, 0, 'obstacle');
-        obstacle.scale.setTo(0.52, 2);
+        obstacle.scale.setTo(0.52, 2.2);
         obstacle.body.immovable = true;
 
         //water
@@ -140,6 +153,8 @@
         waterObstacle = platforms.create(570, 600, 'obstacle');
         waterObstacle.scale.setTo(0.05, 1);
         waterObstacle.body.immovable = true;
+
+
     }
 
     function initEnvironmnent() {
@@ -148,6 +163,7 @@
 
         //  A simple background for our game
         game.add.sprite(0, 0, 'sky');
+
 
         //  The platforms group contains the ground and the 2 ledges we can jump on
         platforms = game.add.group();
@@ -168,6 +184,8 @@
         ledge = platforms.create(game.world.width - 30, 0, 'side');
         ledge.body.immovable = true;
         initObstacles();
+
+
     }
 
 
@@ -180,7 +198,7 @@
         var randomY = Math.floor(Math.random() * 650) + 30;
         var randomItem = itemCollection[Math.floor(Math.random() * itemCollection.length)].name;
         item = items.create(randomX, randomY, randomItem);
-        var autoDestruct = createAutoDestructTimer(item, 3)
+        var autoDestruct = createAutoDestructTimer(item, 100)
     }
 
 })();
