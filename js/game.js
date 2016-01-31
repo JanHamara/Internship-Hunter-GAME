@@ -12,6 +12,7 @@
 
     var starTimer;
     var obstacle, waterObstacle;
+    var musicPlaying = false;
 
 
     var menuState = {
@@ -64,11 +65,12 @@
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
 
+            game.load.audio('sound', 'assets/80s-electric.mp3');
 
             // load different items that can be picked up
             var itemCollection = topCompanies.concat(regularCompanies.concat(recreation.concat(recreation)));
-                itemCollection.push(hackathon);
-                itemCollection.push(studies);
+            itemCollection.push(hackathon);
+            itemCollection.push(studies);
             for (var i = 0; i < itemCollection.length; i++) {
                 var item = new Item(itemCollection[i].name, 0, itemCollection[i].image);
                 item.effect = itemCollection[i].effect;
@@ -78,6 +80,12 @@
         },
         create: function () {
 
+            var audio = game.add.audio('sound');
+            if (!musicPlaying) {
+                audio.play();
+                musicPlaying = true;
+            }
+            
             initEnvironmnent();
 
             p1 = new Player(game, 'player-red', x = 50, y = 50);
@@ -252,14 +260,14 @@
                 if (item_object.name == 'mlh')
                     game.state.start('special');
 
-                if(item_object.name == "redbull"){
+                if (item_object.name == "redbull") {
                     var redBullTimer = game.time.create(true);
                     redBullTimer.add(3000, function (player_object) {
                         player_object.currentSpeed = PLAYER_DEFAULT_SPEED;
                         player_object.sprite.scale.setTo(1.0 * PLAYER_DEFAULT_SCALE, 1.0 * PLAYER_DEFAULT_SCALE)
                     }, null, player_object);
                     redBullTimer.start();
-                }else if(item_object.name == "beer"){
+                } else if (item_object.name == "beer") {
                     var beerTimer = game.time.create(true);
                     beerTimer.add(3000, function (player_object) {
                         player_object.currentSpeed = PLAYER_DEFAULT_SPEED;
@@ -281,7 +289,7 @@
 
         },
 
-        start: function() {
+        start: function () {
             game.state.start('special');
             console.log('special');
         }
@@ -424,7 +432,7 @@
 
         },
 
-        start: function() {
+        start: function () {
             game.state.start('special');
             console.log('special');
         }
