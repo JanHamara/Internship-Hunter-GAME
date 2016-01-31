@@ -42,9 +42,9 @@ var p2xp = 0;
         create: function () {
             game.add.sprite(0, 0, 'start');
 
-            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+            var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-            wkey.onDown.addOnce(this.start, this);
+            spaceKey.onDown.addOnce(this.start, this);
 
         },
         start: function () {
@@ -309,9 +309,12 @@ var p2xp = 0;
             game.add.sprite(0, 0, 'start');
             p1xp = 0;
             p2xp = 0;
+            var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+            spaceKey.onDown.addOnce(this.start, this);
         },
         start: function () {
-
+            game.state.start('menu');
         }
     };
 
