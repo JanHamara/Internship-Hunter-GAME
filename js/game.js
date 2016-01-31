@@ -23,7 +23,7 @@
             spaceKey.onDown.addOnce(this.start, this);
         },
         start: function () {
-            game.state.start('info');
+            game.state.start('character');
         }
     };
 
@@ -302,11 +302,28 @@
         }
     };
 
+    var characterState = {
+        preload: function () {
+            game.load.image('start', 'assets/first_screen.png');
+        },
+        create: function () {
+            game.add.sprite(0, 0, 'start');
+
+            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+            wkey.onDown.addOnce(this.start, this);
+
+        },
+        start: function () {
+            game.state.start('info');
+        }
+    };
     game.state.add('menu', menuState);
     game.state.add('game', gameState);
     game.state.add('info', infoState);
     game.state.add('won', wonState);
     game.state.add('special', specialState);
+    game.state.add('character', characterState);
     game.state.start('menu');
 
 })();
