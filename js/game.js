@@ -13,6 +13,12 @@
     }, {
         name: 'uoc',
         image: 'assets/uoc_logo.png'
+    }, {
+        name: 'redbull',
+        image: 'assets/icon_redbull.png'
+    }, {
+        name: 'beer',
+        image: 'assets/icon_beer.png'
     }];
 
     function preload() {
