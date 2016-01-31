@@ -1,6 +1,11 @@
 (function () {
+    var game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {
+        preload: preload,
+        create: create,
+        update: update
+    });
 
-    var game = new Phaser.Game(1024, 768, Phaser.AUTO, '', {preload: preload, create: create, update: update});
+
     var itemCollection = [{
         name: 'chrome',
         image: 'assets/icon_chrome.png'
@@ -22,19 +27,16 @@
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
         game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
+
+        // load different items that can be picked up
         for (var i = 0; i < itemCollection.length; i++) {
             game.load.image(itemCollection[i].name, itemCollection[i].image);
         }
-
     }
 
-    var DEFAULT_SPEED = 400;
-    var DEFAULT_SPRITE_FRAMERATE = 5;
+    var p1, p2;
 
-    var player;
     var platforms;
-    var p1Cursor;
-    var p2Cursor;
     var items;
     var item;
 
@@ -44,7 +46,21 @@
 
         initEnvironmnent();
 
-        initPlayer();
+        p1 = new Player(game, 'player-red', x = 50, y = 50);
+        p1.setControls({
+            up: 'W',
+            down: 'S',
+            left: 'A',
+            right: 'D'
+        });
+
+        p2 = new Player(game, 'player-white', x = game.world.width - 130, y = game.world.height - 130);
+        p2.setControls({
+            up: 'UP',
+            down: 'DOWN',
+            left: 'LEFT',
+            right: 'RIGHT'
+        });
 
         items = game.add.group();
         items.enableBody = true;
@@ -65,21 +81,22 @@
     }
 
     function update() {
-
         //  Collide the player and the items with the platforms
-        game.physics.arcade.collide(player, platforms);
-        game.physics.arcade.collide(items, platforms);
+        game.physics.arcade.collide(p1.sprite, platforms);
+        game.physics.arcade.overlap(p1.sprite, items, collectObject, null, this);
 
-        game.physics.arcade.overlap(player, items, collectObject, null, this);
+        game.physics.arcade.collide(p1.sprite, p2.sprite);
 
-        movePlayer(player, p1Cursor, DEFAULT_SPEED);
+        game.physics.arcade.collide(p2.sprite, platforms);
+        game.physics.arcade.overlap(p2.sprite, items, collectObject, null, this);
 
-
+        p1.movePlayer();
+        p2.movePlayer();
     }
 
 
     function initEnvironmnent() {
-//  We're going to be using physics, so enable the Arcade Physics system
+        //  We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         //  A simple background for our game
@@ -114,61 +131,6 @@
         ledge.body.immovable = true;
     }
 
-    function initPlayer() {
-// The player and its settings
-        player = game.add.sprite(32, game.world.height - 150, 'player-red');
-
-        //  We need to enable physics on the player
-        game.physics.arcade.enable(player);
-
-        //  Player physics properties. Give the little guy a slight bounce.
-        player.body.collideWorldBounds = true;
-
-        //  Our two animations, walking left and right.
-        player.animations.add('left', [6, 7, 8], 10, true);
-        player.animations.add('right', [9, 10, 11], 10, true);
-        player.animations.add('up', [0, 1, 2], 10, true);
-        player.animations.add('down', [3, 4, 5], 10, true);
-
-        player.scale.setTo(0.2, 0.2)
-    }
-
-    function movePlayer(player, cursor, speed) {
-        //  Reset the players velocity (movement)
-        player.body.velocity.x = 0;
-        player.body.velocity.y = 0;
-
-        if (cursor.left.isDown) {
-            //  Move to the left
-            player.body.velocity.x = -speed;
-
-            player.animations.play('left');
-        }
-        else if (cursor.right.isDown) {
-            //  Move to the right
-            player.body.velocity.x = speed;
-
-            player.animations.play('right');
-        }
-        else if (cursor.up.isDown) {
-            //  Move to the right
-            player.body.velocity.y = -speed;
-
-            player.animations.play('up');
-        }
-        else if (cursor.down.isDown) {
-            //  Move to the right
-            player.body.velocity.y = speed;
-
-            player.animations.play('down');
-        }
-        else {
-            //  Stand still
-            player.animations.stop();
-
-            player.frame = 4;
-        }
-    }
 
     function collectObject(player, object) {
         object.kill();
@@ -181,4 +143,5 @@
         item = items.create(randomX, randomY, randomItem);
         var autoDestruct = createAutoDestructTimer(item, 3)
     }
+
 })();
