@@ -5,6 +5,32 @@
         update: update
     });
 
+    var menuState = {
+        create: function () {
+            game.add.text(100, 100, 'Hello',
+                {font: '50px Arial', fill: '#ffffff'});
+
+            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+            wkey.onDown.addOnce(this.start, this);
+
+        },
+        start: function () {
+            game.state.start('game');
+        }
+    };
+
+    var gameState = {
+        create: function() {
+
+        },
+        update: function(){}
+    };
+
+    game.state.add('menu', menuState);
+    game.state.add('game', gameState);
+    game.state.start('menu');
+
 
     var itemCollection = [{
         name: 'google',
@@ -82,9 +108,8 @@
             right: 'RIGHT'
         });
 
-        exp1 =  new Experience(game, 'xpBar1','blueBar', 4, 400);
-        exp2 = new Experience(game, 'xpBar2','redBar', 937, 400);
-
+        exp1 = new Experience(game, 'xpBar1', 'blueBar', 4, 400);
+        exp2 = new Experience(game, 'xpBar2', 'redBar', 937, 400);
 
 
         items = game.add.group();
