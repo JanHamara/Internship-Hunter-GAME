@@ -323,7 +323,7 @@ var p2xp = 0;
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
             game.load.atlasJSONArray('wifi', 'sprites/wifi.png', 'sprites/wifi.json');
-            game.load.image('start', 'assets/.jpg');
+            game.load.image('map_wifi', 'assets/map_wifi.png');
         },
         create: function () {
 
@@ -373,7 +373,7 @@ var p2xp = 0;
                 game.physics.startSystem(Phaser.Physics.ARCADE);
 
                 //  A simple background for our game
-                //game.add.sprite(0, 0, 'sky');
+                game.add.sprite(0, 0, 'map_wifi');
 
 
                 //  The platforms group contains the ground and the 2 ledges we can jump on
