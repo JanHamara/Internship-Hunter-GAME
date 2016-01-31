@@ -47,25 +47,7 @@
             game.add.sprite(0, 0, 'start');
 
             var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        p1 = new Player(game, 'player-red', x = 50, y = 50);
-        p1.setControls({
-            up: 'W',
-            down: 'S',
-            left: 'A',
-            right: 'D',
-            shoot: 'TAB'
-        });
-
             wkey.onDown.addOnce(this.start, this);
-        p2 = new Player(game, 'player-white', x = game.world.width - 130, y = 50);
-        p2.setControls({
-            up: 'UP',
-            down: 'DOWN',
-            left: 'LEFT',
-            right: 'RIGHT',
-            shoot: 'L'
-        });
-
         },
         start: function () {
             game.state.start('info');
@@ -119,7 +101,8 @@
                 up: 'W',
                 down: 'S',
                 left: 'A',
-                right: 'D'
+                right: 'D',
+                shoot: 'TAB'
             });
 
             p2 = new Player(game, 'player-white', x = game.world.width - 130, y = 50);
@@ -127,7 +110,8 @@
                 up: 'UP',
                 down: 'DOWN',
                 left: 'LEFT',
-                right: 'RIGHT'
+                right: 'RIGHT',
+                shoot: 'L'
             });
 
             exp1 = new Experience(game, 'xpBar1', 'blueBar', 4, 400);
