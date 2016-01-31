@@ -55,6 +55,7 @@
     var item;
 
     var starTimer;
+    var obstacle, waterObstacle;
 
     function create() {
 
@@ -68,7 +69,7 @@
             right: 'D'
         });
 
-        p2 = new Player(game, 'player-white', x = game.world.width - 130, y = game.world.height - 130);
+        p2 = new Player(game, 'player-white', x = game.world.width - 130, y = 50);
         p2.setControls({
             up: 'UP',
             down: 'DOWN',
@@ -109,6 +110,34 @@
     }
 
 
+    function initObstacles() {
+//obstacles
+        obstacle = platforms.create(430, 355, 'obstacle');
+        obstacle.scale.setTo(0.365, 0.8);
+        obstacle.body.immovable = true;
+
+        obstacle = platforms.create(585, 310, 'obstacle');
+        obstacle.scale.setTo(0.06, 2);
+        obstacle.body.immovable = true;
+
+        //water
+        waterObstacle = platforms.create(730, 575, 'obstacle');
+        waterObstacle.scale.setTo(0.4, 1.7);
+        waterObstacle.body.immovable = true;
+
+        waterObstacle = platforms.create(0, 620, 'obstacle');
+        waterObstacle.scale.setTo(0.35, 3);
+        waterObstacle.body.immovable = true;
+
+        waterObstacle = platforms.create(400, 650, 'obstacle');
+        waterObstacle.scale.setTo(0.16, 3);
+        waterObstacle.body.immovable = true;
+
+        waterObstacle = platforms.create(570, 600, 'obstacle');
+        waterObstacle.scale.setTo(0.05, 1);
+        waterObstacle.body.immovable = true;
+    }
+
     function initEnvironmnent() {
         //  We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -134,15 +163,7 @@
 
         ledge = platforms.create(game.world.width - 30, 0, 'side');
         ledge.body.immovable = true;
-
-        //obstacles
-        var obstacle = platforms.create(430, 355, 'obstacle');
-        obstacle.scale.setTo(0.365, 0.8);
-        obstacle.body.immovable = true;
-
-        obstacle = platforms.create(585, 310, 'obstacle');
-        obstacle.scale.setTo(0.06, 2);
-        obstacle.body.immovable = true;
+        initObstacles();
     }
 
 
