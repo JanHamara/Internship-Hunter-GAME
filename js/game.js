@@ -39,9 +39,30 @@
 
 
     var menuState = {
+        preload:  function(){
+            game.load.image('start', 'assets/first_screen.png');
+        },
         create: function () {
-            game.add.text(100, 100, 'Hello',
-                {font: '50px Arial', fill: '#ffffff'});
+            game.load.image('start', 'assets/map.png');
+            game.add.sprite(0, 0, 'start');
+
+            var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+            wkey.onDown.addOnce(this.start, this);
+
+        },
+        start: function () {
+            game.state.start('info');
+        }
+    };
+
+    var infoState = {
+        preload:  function(){
+            game.load.image('start', 'assets/help_screen.png');
+        },
+        create: function () {
+            game.load.image('start', 'assets/map.png');
+            game.add.sprite(0, 0, 'start');
 
             var wkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
@@ -184,8 +205,6 @@
             }
 
 
-
-
             function spawnObject() {
                 var randomX = Math.floor(Math.random() * 800) + 30;
                 var randomY = Math.floor(Math.random() * 650) + 30;
@@ -218,6 +237,7 @@
 
     game.state.add('menu', menuState);
     game.state.add('game', gameState);
+    game.state.add('info', infoState);
     game.state.start('menu');
 
 })();
