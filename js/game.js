@@ -311,6 +311,7 @@
                 } else if (85 <= randomOdd && randomOdd < 100) {
                     item = items.create(randomX, randomY, studies.name)
                 }
+
                 var autoDestruct = createAutoDestructTimer(item, 3)
             }
 
@@ -350,6 +351,23 @@
                 }
 
                 var gameWon = player_object.xp.addXP(item_object.effect.dXP);
+                if(item_object.name == "redbull"){
+                    var redBullTimer = game.time.create(true);
+                    redBullTimer.add(3000, function (player_object) {
+                        player_object.currentSpeed = PLAYER_DEFAULT_SPEED;
+                        player_object.sprite.scale.setTo(1.0 * PLAYER_DEFAULT_SCALE, 1.0 * PLAYER_DEFAULT_SCALE)
+                    }, null, player_object);
+                    redBullTimer.start();
+                }else if(item_object.name == "beer"){
+                    var beerTimer = game.time.create(true);
+                    beerTimer.add(3000, function (player_object) {
+                        player_object.currentSpeed = PLAYER_DEFAULT_SPEED;
+                        player_object.sprite.scale.setTo(1.0 * PLAYER_DEFAULT_SCALE, 1.0 * PLAYER_DEFAULT_SCALE)
+                    }, null, player_object);
+                    beerTimer.start();
+                }
+
+                player_object.xp.addXP(item_object.effect.dXP);
 
                 if (gameWon)
                     game.state.start('won');
