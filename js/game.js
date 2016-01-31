@@ -311,7 +311,6 @@
         preload: function () {
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
-            game.load.image('diamond', 'assets/diamond.png');
             game.load.atlasJSONArray('wifi', 'sprites/wifi.png', 'sprites/wifi.json');
         },
         create: function () {
@@ -424,6 +423,7 @@
             function collectObject(playerSprite, objectSprite) {
                 objectSprite.kill();
                 specialViewCollectCount++;
+
                 if (specialViewCollectCount >= WIFI_VIEW_COLLECTED) {
                     specialViewCollectCount = 0;
                     game.state.start('game');
