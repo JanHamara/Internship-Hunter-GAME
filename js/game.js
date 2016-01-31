@@ -318,6 +318,7 @@
                 } else if (85 <= randomOdd && randomOdd < 100) {
                     item = items.create(randomX, randomY, studies.name)
                 }
+
                 var autoDestruct = createAutoDestructTimer(item, 3)
             }
         },
