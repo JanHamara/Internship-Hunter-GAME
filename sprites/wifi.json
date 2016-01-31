@@ -1,0 +1,44 @@
+{"frames": [
+
+{
+	"filename": "icon_wifi_1.png",
+	"frame": {"x":1,"y":1,"w":18,"h":18},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":41,"y":72,"w":18,"h":18},
+	"sourceSize": {"w":100,"h":100}
+},
+{
+	"filename": "icon_wifi_2.png",
+	"frame": {"x":21,"y":1,"w":48,"h":39},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":26,"y":51,"w":48,"h":39},
+	"sourceSize": {"w":100,"h":100}
+},
+{
+	"filename": "icon_wifi_3.png",
+	"frame": {"x":71,"y":1,"w":76,"h":60},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":12,"y":30,"w":76,"h":60},
+	"sourceSize": {"w":100,"h":100}
+},
+{
+	"filename": "icon_wifi_4.png",
+	"frame": {"x":149,"y":1,"w":100,"h":80},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":10,"w":100,"h":80},
+	"sourceSize": {"w":100,"h":100}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "wifi.png",
+	"format": "RGBA8888",
+	"size": {"w":250,"h":82},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:31376821787d189d737e3447277a62c6:1a5135dc7f6673af32ffc299d2433a47:4143886e633788e64fc38c71a74159aa$"
+}
+}
