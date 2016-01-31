@@ -8,6 +8,8 @@
     var items;
     var item;
 
+    var specialViewCollectCount = 0;
+
     var starTimer;
     var obstacle, waterObstacle;
 
@@ -243,6 +245,10 @@
                 }
 
                 var gameWon = player_object.xp.addXP(item_object.effect.dXP);
+
+                if (item_object.name == 'mlh')
+                    game.state.start('special');
+
                 if(item_object.name == "redbull"){
                     var redBullTimer = game.time.create(true);
                     redBullTimer.add(3000, function (player_object) {
@@ -295,6 +301,7 @@
             game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
             game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
             game.load.image('diamond', 'assets/diamond.png');
+            // game.load.atlasJSONArray('wifi, 'sprites/wifi.png', 'sprites/wifi.json');
         },
         create: function () {
 
@@ -402,6 +409,11 @@
 
             function collectObject(playerSprite, objectSprite) {
                 objectSprite.kill();
+                specialViewCollectCount++;
+                if (specialViewCollectCount >= WIFI_VIEW_COLLECTED) {
+                    specialViewCollectCount = 0;
+                    game.state.start('game');
+                }
             }
 
         },
