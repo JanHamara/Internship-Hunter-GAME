@@ -29,6 +29,7 @@
         game.load.image('sky', 'assets/map.png');
         game.load.image('ground', 'assets/wall.jpg');
         game.load.image('side', 'assets/wall2.jpg');
+        game.load.image('obstacle', 'assets/obstacle.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         game.load.atlasJSONArray('player-red', 'sprites/red.png', 'sprites/red.json');
         game.load.atlasJSONArray('player-white', 'sprites/white.png', 'sprites/white.json');
@@ -103,13 +104,8 @@
 
         // Here we create the ground.
         var ground = platforms.create(0, game.world.height - 30, 'ground');
-
-
-
-        //  This stops it from falling away when you jump on it
         ground.body.immovable = true;
 
-        //  Now let's create two ledges
         var ledge = platforms.create(0, 0, 'ground');
         ledge.body.immovable = true;
 
@@ -118,6 +114,15 @@
 
         ledge = platforms.create(game.world.width - 30, 0, 'side');
         ledge.body.immovable = true;
+
+        //obstacles
+        var obstacle = platforms.create(430, 355, 'obstacle');
+        obstacle.scale.setTo(0.365, 0.8);
+        obstacle.body.immovable = true;
+
+        obstacle = platforms.create(585, 310, 'obstacle');
+        obstacle.scale.setTo(0.06, 2);
+        obstacle.body.immovable = true;
     }
 
     function initPlayer() {
