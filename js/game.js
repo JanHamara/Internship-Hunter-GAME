@@ -19,6 +19,12 @@
     }, {
         name: 'beer',
         image: 'assets/icon_beer.png'
+    }, {
+        name: 'gsa',
+        image: 'assets/icon_gsa.png'
+    }, {
+        name: 'cantab',
+        image: 'assets/icon_cantab.png'
     }];
 
     function preload() {
