@@ -228,11 +228,8 @@ var p2xp = 0;
                 var autoDestruct = createAutoDestructTimer(item, 3)
             }
 
-            // B takes you to the wifi level immediately
             var specialKey = game.input.keyboard.addKey(Phaser.Keyboard.B);
-            specialKey.onDown.addOnce(function () {
-                game.state.start('special');
-            }, this);
+            specialKey.onDown.addOnce(this.start, this);
         },
         update: function () {
             //  Collide the player and the items with the platforms
