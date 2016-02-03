@@ -105,8 +105,8 @@ var p2xp = 0;
                 shoot: 'L'
             });
 
+            // U gives p1 almost full XP (to speed up the game)
             var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.U);
-
             spaceKey.onDown.addOnce(function(){
                 p1.xp.setXP(99);
             }, this);
@@ -139,7 +139,7 @@ var p2xp = 0;
 
 
             function initObstacles() {
-//obstacles
+                //obstacles
                 obstacle = platforms.create(430, 355, 'obstacle');
                 obstacle.scale.setTo(0.365, 0.8);
                 obstacle.body.immovable = true;
@@ -252,7 +252,7 @@ var p2xp = 0;
                 var player_object;
                 for (var i = 0; i < ITEM_OBJECTS.length; i++) {
                     if (objectSprite.key == ITEM_OBJECTS[i].name) {
-                        item_object = ITEM_OBJECTS[i]
+                        item_object = ITEM_OBJECTS[i];
                         break;
                     }
                 }
@@ -281,12 +281,14 @@ var p2xp = 0;
                     beerTimer.start();
                 }
 
-                player_object.xp.addXP(item_object.effect.dXP);
 
+                // handle XP effects
+                player_object.xp.addXP(item_object.effect.dXP);
                 if (gameWon)
                     game.state.start('won');
 
 
+                // handle speed/scale effects
                 player_object.currentSpeed += item_object.effect.dSpeed;
                 player_object.sprite.scale.setTo(item_object.effect.dScale * PLAYER_DEFAULT_SCALE, item_object.effect.dScale * PLAYER_DEFAULT_SCALE)
                 objectSprite.kill();
