@@ -22,7 +22,6 @@ Experience.prototype.setXP = function (xp) {
 Experience.prototype.drawXP = function () {
     this.bar.scale.setTo(0.7, this.xp / 100);
     this.bar.y = 675 - (this.xp * 2.7);
-    console.log(this.xp);
 };
 
 Experience.prototype.addXP = function (xp) {
