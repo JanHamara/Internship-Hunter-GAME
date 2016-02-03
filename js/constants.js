@@ -8,3 +8,6 @@ var ITEM_OBJECTS = [];
 var ITEM_SPAWN_DELAY = 1000;
 
 var WIFI_VIEW_COLLECTED = 5;
+
+// as a float between 0.0 and 1.0
+var PROBABILITY_OF_WIFI_ISSUES_ON_A_HACKATHON = 0.2;

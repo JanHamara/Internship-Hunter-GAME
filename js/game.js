@@ -291,11 +291,16 @@ var p2xp = 0;
                 player_object.sprite.scale.setTo(item_object.effect.dScale * PLAYER_DEFAULT_SCALE, item_object.effect.dScale * PLAYER_DEFAULT_SCALE)
                 objectSprite.kill();
 
+                // handle hackathons, which may result in a spawn in no-wifi room
                 if (item_object.name == 'mlh') {
                     p1xp = p1.xp.getXP();
                     p2xp = p2.xp.getXP();
 
-                    game.state.start('special');
+                    // sometimes the wifi doesn't work on the hackathon
+                    var rndHack = game.rnd.integerInRange(0, 100);
+                    if (rndHack < PROBABILITY_OF_WIFI_ISSUES_ON_A_HACKATHON * 100) {
+                        game.state.start('special');
+                    }
                 }
             }
 
