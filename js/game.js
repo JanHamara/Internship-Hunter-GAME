@@ -228,8 +228,11 @@ var p2xp = 0;
                 var autoDestruct = createAutoDestructTimer(item, 3)
             }
 
+            // B takes you to the wifi level immediately
             var specialKey = game.input.keyboard.addKey(Phaser.Keyboard.B);
-            specialKey.onDown.addOnce(this.start, this);
+            specialKey.onDown.addOnce(function () {
+                game.state.start('special');
+            }, this);
         },
         update: function () {
             //  Collide the player and the items with the platforms
@@ -304,11 +307,6 @@ var p2xp = 0;
                 }
             }
 
-        },
-
-        start: function () {
-            game.state.start('special');
-            console.log('special');
         }
     };
 
@@ -424,8 +422,11 @@ var p2xp = 0;
                 createAutoDestructTimer(item, 2)
             }
 
+            // here in wifi level, B takes you back to the general one
             var specialKey = game.input.keyboard.addKey(Phaser.Keyboard.B);
-            specialKey.onDown.addOnce(this.start, this);
+            specialKey.onDown.addOnce(function () {
+                game.state.start('game');
+            }, this);
         },
         update: function () {
             //  Collide the player and the items with the platforms
@@ -453,11 +454,6 @@ var p2xp = 0;
                 }
             }
 
-        },
-
-        start: function () {
-            game.state.start('special');
-            console.log('special');
         }
     };
 
